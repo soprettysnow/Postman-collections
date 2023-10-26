@@ -1,0 +1,465 @@
+{
+	"info": {
+		"_postman_id": "723ae476-65fc-425f-b986-5a1b0caa4d61",
+		"name": "Тестирование API VK",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29740517"
+	},
+	"item": [
+		{
+			"name": "Создание альбома",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    let jsonData = JSON.parse(responseBody);",
+							"    pm.collectionVariables.set(\"album_id\", jsonData.response.id)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{vkAPI}}/method/photos.createAlbum?title=Phonk&access_token={{token}}&v={{v}}",
+					"host": [
+						"{{vkAPI}}"
+					],
+					"path": [
+						"method",
+						"photos.createAlbum"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Phonk"
+						},
+						{
+							"key": "access_token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "v",
+							"value": "{{v}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение адреса загрузки фото",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{vkAPI}}/method/photos.getUploadServer?album_id={{album_id}}&access_token={{token}}&v={{v}}",
+					"host": [
+						"{{vkAPI}}"
+					],
+					"path": [
+						"method",
+						"photos.getUploadServer"
+					],
+					"query": [
+						{
+							"key": "album_id",
+							"value": "{{album_id}}"
+						},
+						{
+							"key": "access_token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "v",
+							"value": "{{v}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Загрузка фото",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file1",
+							"contentType": "",
+							"type": "file",
+							"src": "/Users/daniilkirakov/Desktop/file2.png"
+						},
+						{
+							"key": "file2",
+							"type": "file",
+							"src": "/Users/daniilkirakov/Downloads/PA040268.JPG"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://pu.vk.com/c240031/ss2273/upload.php?act=do_add&mid=307271222&aid=298354556&gid=0&hash=7c8912c0ebedbde27a6dfe9682612b9a&rhash=683ab5f25cc573777be7af07bcec0c59&swfupload=1&api=1",
+					"protocol": "https",
+					"host": [
+						"pu",
+						"vk",
+						"com"
+					],
+					"path": [
+						"c240031",
+						"ss2273",
+						"upload.php"
+					],
+					"query": [
+						{
+							"key": "act",
+							"value": "do_add"
+						},
+						{
+							"key": "mid",
+							"value": "307271222"
+						},
+						{
+							"key": "aid",
+							"value": "298354556"
+						},
+						{
+							"key": "gid",
+							"value": "0"
+						},
+						{
+							"key": "hash",
+							"value": "7c8912c0ebedbde27a6dfe9682612b9a"
+						},
+						{
+							"key": "rhash",
+							"value": "683ab5f25cc573777be7af07bcec0c59"
+						},
+						{
+							"key": "swfupload",
+							"value": "1"
+						},
+						{
+							"key": "api",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Список фотографий",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    let jsonData = JSON.parse(responseBody);",
+							"    pm.collectionVariables.set(\"first_photo_id\", jsonData.response.items[0].id)",
+							"    pm.collectionVariables.set(\"second_photo_id\", jsonData.response.items[1].id)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{vkAPI}}/method/photos.get?access_token={{token}}&v={{v}}&album_id={{album_id}}",
+					"host": [
+						"{{vkAPI}}"
+					],
+					"path": [
+						"method",
+						"photos.get"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "v",
+							"value": "{{v}}"
+						},
+						{
+							"key": "album_id",
+							"value": "{{album_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление комментариев",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{vkAPI}}/method/photos.createComment?access_token={{token}}&v={{v}}&message=\"Добавление комментов РАБОТАЕТ\"&photo_id={{first_photo_id}}&photo_id={{second_photo_id}}",
+					"host": [
+						"{{vkAPI}}"
+					],
+					"path": [
+						"method",
+						"photos.createComment"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "v",
+							"value": "{{v}}"
+						},
+						{
+							"key": "message",
+							"value": "\"Добавление комментов РАБОТАЕТ\""
+						},
+						{
+							"key": "photo_id",
+							"value": "{{first_photo_id}}"
+						},
+						{
+							"key": "photo_id",
+							"value": "{{second_photo_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Редактирование коммента",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{vkAPI}}/method/photos.editComment?access_token={{token}}&v={{v}}&message=\"Редактирование комментов РАБОТАЕТ\"&photo_id={{first_photo_id}}&comment_id=56",
+					"host": [
+						"{{vkAPI}}"
+					],
+					"path": [
+						"method",
+						"photos.editComment"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "v",
+							"value": "{{v}}"
+						},
+						{
+							"key": "message",
+							"value": "\"Редактирование комментов РАБОТАЕТ\""
+						},
+						{
+							"key": "photo_id",
+							"value": "{{first_photo_id}}"
+						},
+						{
+							"key": "comment_id",
+							"value": "56"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление фото",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{vkAPI}}/method/photos.delete?access_token={{token}}&v={{v}}&album_id={{album_id}}&photo_id={{first_photo_id}}",
+					"host": [
+						"{{vkAPI}}"
+					],
+					"path": [
+						"method",
+						"photos.delete"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "v",
+							"value": "{{v}}"
+						},
+						{
+							"key": "album_id",
+							"value": "{{album_id}}"
+						},
+						{
+							"key": "photo_id",
+							"value": "{{first_photo_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление альбом",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    let jsonData = JSON.parse(responseBody);",
+							"    pm.collectionVariables.set(\"first_photo_id\", jsonData.response.items[0].id)",
+							"    pm.collectionVariables.set(\"second_photo_id\", jsonData.response.items[1].id)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{vkAPI}}/method/photos.deleteAlbum?access_token={{token}}&v={{v}}&album_id={{album_id}}",
+					"host": [
+						"{{vkAPI}}"
+					],
+					"path": [
+						"method",
+						"photos.deleteAlbum"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "v",
+							"value": "{{v}}"
+						},
+						{
+							"key": "album_id",
+							"value": "{{album_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base",
+			"value": "https://oauth.vk.com/authorize"
+		},
+		{
+			"key": "vkAPI",
+			"value": "https://api.vk.com"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "v",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "album_id",
+			"value": ""
+		},
+		{
+			"key": "first_photo_id",
+			"value": ""
+		},
+		{
+			"key": "second_photo_id",
+			"value": ""
+		},
+		{
+			"key": "comment_id",
+			"value": ""
+		}
+	]
+}
